@@ -1,11 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            gap: 2rem;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+    </style>
+    <script defer>
+        const ws = new WebSocket('ws://localhost:8081/ws');
+        document.addEventListener("DOMContentLoaded", () => {
+            const h2 = document.querySelector("h2");
+            ws.onmessage = (e) => {
+                h2.textContent = e.data;
+            }
+            
+            ws.onerror = (e) => {
+                h2.textContent = e.data;
+            }
+        })
+    </script>
 </head>
 <body>
-    
+    <h1>!Bienvenido al sistema!</h1>
+    <h2></h2>
 </body>
 </html>
