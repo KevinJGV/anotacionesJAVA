@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,22 +20,29 @@
             font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
     </style>
-    <script defer>
-        const ws = new WebSocket('ws://localhost:8081/ws');
-        document.addEventListener("DOMContentLoaded", () => {
-            const h2 = document.querySelector("h2");
-            ws.onmessage = (e) => {
-                h2.textContent = e.data;
-            }
-            
-            ws.onerror = (e) => {
-                h2.textContent = e.data;
-            }
-        })
-    </script>
 </head>
 <body>
     <h1>!Bienvenido al sistema!</h1>
     <h2></h2>
+    <script defer>
+        document.addEventListener("DOMContentLoaded", () => {
+            const ws = new WebSocket('ws://localhost:8081/ws');
+
+            const h2 = document.querySelector("h2");
+            ws.onopen = () => {
+                console.log("WebSocket conectado");
+            };
+
+            
+            ws.onmessage = (e) => {
+                console.log(e.data);
+                h2.textContent = e.data;
+            }
+            
+            ws.onerror = (e) => {
+                h2.textContent = "Error al conectar con el servidor.";
+            }
+        })
+    </script>
 </body>
 </html>
